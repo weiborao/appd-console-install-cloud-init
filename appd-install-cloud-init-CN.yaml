@@ -1,11 +1,20 @@
 #cloud-config
+#Update the packages onboot.
+package_update: true
+
+#ncurses-compat-libs is for Amazon Linux 2.
 packages:
   - libaio
   - numactl
   - tzdata
-  - ncurses-libs-5.x
+  - ncurses-compat-libs
 
 write_files:
+  - path: /etc/profile.d/lang.sh
+    content: |
+      export LANG=en_US.UTF-8
+      export LC_ALL=en_US.UTF-8
+
   - path: /etc/security/limits.conf
     content: |
       root hard nofile 65535
